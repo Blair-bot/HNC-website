@@ -1,0 +1,12 @@
+<?php
+$host = 'localhost';
+$dbname = 'da_inspection';
+$username = 'your_username';
+$password = 'your_password';
+
+try{
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOExecption $e) {
+    die('Database connection failed.');
+}
