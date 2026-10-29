@@ -1,10 +1,10 @@
 <?php
 require 'db.php';
 
-$id = $_get['id'] ?? null;
+$id = $_GET['id'] ?? null;
 $stmt = $pdo->prepare('SELECT * FROM products WHERE id = ?');
 $stmt->execute ([$id]);
-$product = $stmt->fetch(POD::FETCH_ASSOC);
+$product = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$product) {
     http_response_code(404);
@@ -17,7 +17,7 @@ if (!$product) {
 <head>
     <meta charset='UTF-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= $product ? htmlspecialchars($product['name']) : 'Product not found' ?> | DA Inspection</title> | DA Inspection</title>
+    <title><?= $product ? htmlspecialchars($product['name']) : 'Product not found' ?> | DA Inspection</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -37,15 +37,33 @@ if (!$product) {
 <?php if ($product): ?>
 
     <section class="hero">
-        <h2><?=htmlspecialchars($product['name'])</h2>
+        <h2><?=htmlspecialchars($product['name'])?></h2>
         <p><?=htmlspecialchars($product['description']) ?></p>
     </section>
 
 <main class = "product-detail">
-    <img src="Images/<?= htmlspecialchars($product['image']) ?> "alt="<?= htmlspecialchars($product['alt_text']) ?>">
+    <img src="Images/<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['alt_text']) ?>">
 
     <div class="product-info">
 
     <?php if (!empty($product['badge'])): ?>
-        <span class="badge"><?= htmlspecialchars($product['badge']) ?>
+        <span class="badge"><?= htmlspecialchars($product['badge']) ?></span>
         <?php endif; ?>
+</div>
+</main>
+
+<?php else: ?>
+
+    <section class="hero">
+        <h2>Product not available</h2>
+        <p>We're sorry</p>
+    </section>
+
+<?php endif; ?>
+
+<footer>
+    <p>&copy; 2026 DA Inspection</p>
+</footer>
+
+</body>
+</html>
